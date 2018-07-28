@@ -1,3 +1,7 @@
+# Changes
+I've disabled SSL_VERIFYPEER and SSL_VERIFYHOST to get it working in my environment.
+ --> https://github.com/carlos22/carddav2fb/pull/21
+
 # FritzBox! PHP API
 
 Provides an interface to your FritzBox! using the webinterface. Thus, no modification the to firmware (aka FritzOS) is required!
