@@ -129,6 +129,9 @@ class fritzbox_api {
   {
     $ch = curl_init();
 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
     if ( isset($formfields['getpage']) && strpos($formfields['getpage'], '.lua') > 0 )
     {
       curl_setopt($ch, CURLOPT_URL, $this->config->getItem('fritzbox_url') . $formfields['getpage'] . '?sid=' . $this->sid);
@@ -156,10 +159,13 @@ class fritzbox_api {
 		}
 
 		// set SSL-options and path to certificate
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 2);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_CAINFO, '/etc/ssl/certs/'.$ssl_cert_fritzbox.'.pem');
-		curl_setopt($ch, CURLOPT_CAPATH, '/etc/ssl/certs');
+		//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 2);
+		//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+		//curl_setopt($ch, CURLOPT_CAINFO, '/etc/ssl/certs/'.$ssl_cert_fritzbox.'.pem');
+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_CAPATH, '/etc/ssl/certs');
 
 		// support for pre FRITZ!OS 5.50 remote config
 		if (!$this->config->getItem('use_lua_login_method')){
@@ -190,7 +196,10 @@ class fritzbox_api {
     // enable for debugging:
     //curl_setopt($ch, CURLOPT_VERBOSE, TRUE); 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    
+
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
     // if filefileds not specified ('@/path/to/file.xml;type=text/xml' works fine)
     if(empty( $filefileds )) {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $formfields); // http_build_query
